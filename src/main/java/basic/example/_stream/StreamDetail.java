@@ -238,7 +238,7 @@ public class StreamDetail {
     }
 
     /**
-     * 步骤7-将处理后的数据转换为set
+     * 步骤7.2-将处理后的数据转换为set
      * Set的特性是, 相同的元素只有一个, 所以在转换的时候, 会自动去重
      * 相同的标准: hashcode & equals相等
      */
@@ -253,6 +253,10 @@ public class StreamDetail {
         collect.forEach(System.out::println);
     }
 
+    /**
+     * 步骤7.3-将处理后的数据转为map
+     * 这里我们需要注意转换为map, key可能出现冲突的情况
+     */
     @Test
     public void testMap() {
         List<Match> dataSource = getDataSource();
@@ -275,5 +279,87 @@ public class StreamDetail {
                     return next;
                 }
         ));
+    }
+
+    /**
+     * 步骤7.4-将处理后的数据转为String
+     */
+    @Test
+    public void testToString() {
+        List<Match> dataSource = getDataSource();
+        System.out.println("原始数据");
+        dataSource.forEach(System.out::println);
+        System.out.println("转换为String");
+        String collectName = dataSource.stream().map(Match::getName).collect(Collectors.joining(","));
+        System.out.println(collectName);
+        String collectNameV2 = dataSource.stream().map(Match::getName).collect(Collectors.joining(",", "[", "]"));
+        System.out.println(collectNameV2);
+    }
+
+    /**
+     * 步骤7.5-将处理后的数据转换为任意容器
+     */
+    @Test
+    public void testToAnyCollection() {
+        List<Match> dataSource = getDataSource();
+        System.out.println("原始数据, 容器使用的是 :" + dataSource.getClass());
+        dataSource.forEach(System.out::println);
+
+        ArrayDeque<Match> collect = dataSource.stream().collect(Collectors.toCollection(ArrayDeque::new));
+        System.out.println("转换为ArrayDeque, 容器使用的是 :" + collect.getClass());
+        collect.forEach(System.out::println);
+        Match pop = collect.pop();
+        System.out.println("转换为ArrayDeque, pop 出一个元素:" + pop);
+    }
+
+    /**
+     * 步骤8-获取最小值
+     */
+    @Test
+    public void testMin() {
+        List<Match> dataSource = getDataSource();
+        System.out.println("原始数据");
+        dataSource.forEach(System.out::println);
+        System.out.println("获取最小的年龄");
+        Optional<Match> min = dataSource.stream().min(Comparator.comparing(Match::getAge));
+        System.out.println(min);
+
+
+        System.out.println("获取总分数");
+        Integer sum = dataSource.stream().map(Match::getScore).reduce(0, Integer::sum);
+        System.out.println(sum);
+    }
+
+    /**
+     * 步骤9-获取最大值
+     */
+    @Test
+    public void testMax() {
+        List<Match> dataSource = getDataSource();
+        System.out.println("原始数据");
+        Optional<Match> max = dataSource.stream().max(Comparator.comparing(Match::getAge));
+        System.out.println(max);
+    }
+
+    /**
+     * 步骤10-获取数量
+     */
+    @Test
+    public void testCount() {
+        List<Match> dataSource = getDataSource();
+        System.out.println("原始数据");
+        long count = dataSource.stream().filter(item -> item.getScore() > 5).count();
+        System.out.println("获取分数大于5的个数" + count);
+    }
+
+    /**
+     * 步骤11-获取总和
+     */
+    @Test
+    public void testSum() {
+        List<Match> dataSource = getDataSource();
+        System.out.println("原始数据");
+        Integer sum = dataSource.stream().map(Match::getScore).reduce(0, Integer::sum);
+        System.out.println("获取总分数" + sum);
     }
 }

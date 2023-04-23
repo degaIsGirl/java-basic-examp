@@ -50,12 +50,5 @@ public class StartExample {
                         Collectors.toList()
                 );
         collect.forEach(System.out::println);
-
-/*
-        //System.out.println(collect); 求和
-        students.stream().map(Student::getScore).reduce(Double::sum).ifPresent(System.out::println);
-
-        Map<Double, List<Student>> collect1 = students.stream().collect(Collectors.groupingBy(Student::getScore));
-*/
     }
 }
