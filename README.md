@@ -3,6 +3,6 @@
 
 
 ### 1、目录
-* <a href="https://xiaomawang.feishu.cn/docx/PV8gdTfu0oWuvTxPL65cFXFCnod">java内部类总结</a>
-* <a href="https://xiaomawang.feishu.cn/docx/TQa1dybehoP80hxXhyecamWQn5g">lamda表达式总结</a>
-* <a href="https://xiaomawang.feishu.cn/docx/Nzezdpulfo3ilKxwSggc8a5LnOc">Stream常见使用总结</a>
+* <a href="https://xiaomawang.feishu.cn/docx/PV8gdTfu0oWuvTxPL65cFXFCnod" target="_blank">java内部类总结</a>
+* <a href="https://xiaomawang.feishu.cn/docx/TQa1dybehoP80hxXhyecamWQn5g" target="_blank">lamda表达式总结</a>
+* <a href="https://xiaomawang.feishu.cn/docx/Nzezdpulfo3ilKxwSggc8a5LnOc" target="_blank">Stream常见使用总结</a>
