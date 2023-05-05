@@ -114,6 +114,31 @@ public class RefectionDetail {
         assertTrue(streamDetailClass.isInstance(streamDetail));
     }
 
+    private enum SexEnum {
+        /**
+         * 性别
+         */
+        MALE(1, "男"),
+        FEMALE(2, "女");
+
+        private int code;
+
+        private String desc;
+
+        SexEnum(int code, String desc) {
+            this.code = code;
+            this.desc = desc;
+        }
+
+        public int getCode() {
+            return code;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+    }
+
     /**
      * 1、包名称
      * 2、注解
@@ -359,6 +384,24 @@ public class RefectionDetail {
             System.out.println(student.getName());
         } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * 8、枚举
+     */
+    @Test
+    public void testEnum() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Class<SexEnum> sexEnumClass = SexEnum.class;
+        System.out.println("获取枚举的所有属性");
+        Field[] fields = sexEnumClass.getFields();
+        for (Field field : fields) {
+            System.out.println(field.getName());
+        }
+
+        SexEnum[] enumConstants = sexEnumClass.getEnumConstants();
+        for (SexEnum enumConstant : enumConstants) {
+            System.out.println(enumConstant);
         }
     }
 }
