@@ -160,7 +160,7 @@ public class Show {
 
         // String getName(Student this); 记住this是隐含的, 而且只添加到第一个参数的位置上
         Function<Student, String> function3 = Student::getName;
-        List<String> list = Show.getName(students, function2);
+        List<String> list = Show.getName(students, function3);
         System.out.println(list);
 
         // 3.引用构造方法

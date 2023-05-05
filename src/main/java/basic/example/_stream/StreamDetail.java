@@ -51,6 +51,7 @@ public class StreamDetail {
         HashMap<String, Integer> map = new HashMap<>();
         map.put("first", 1);
         map.put("second", 2);
+        //如果我们数据集合想直接使用.stream 方法, 那么这个集合需要实现Collection接口
         //报错 因为map不是Collection的子类
         //map.stream().map(item -> item.toUpperCase())
         map.entrySet().stream().map(item -> item.getKey().toUpperCase() + " by map Collection.stream()").forEach(System.out::println);

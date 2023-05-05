@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -29,11 +30,15 @@ public class StartExample {
                 new Student("wu6", 98.0, "6"),
                 new Student("zheng7", 99.0, "7"));
 
+
+        long count = students.stream().filter(student -> student.getScore() > 98.0).count();
+        System.out.println(count);
+
         /**
          * 去重后按照分数从高到低排序(分数相同-按照名字昵称排序, 昵称字母越小越靠前),
          * 取出前三名, 并转换为list
          */
-        List<Student> collect = students.stream()
+        Set<Student> collect = students.stream()
                 .distinct()
                 .sorted(
                         Comparator.comparing(
@@ -45,9 +50,11 @@ public class StartExample {
                                         Comparator.naturalOrder()
                                 )
                 )
+                .skip(1)
                 .limit(3)
                 .collect(
-                        Collectors.toList()
+                        //Collectors.toList()
+                        Collectors.toSet()
                 );
         collect.forEach(System.out::println);
     }

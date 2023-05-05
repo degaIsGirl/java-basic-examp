@@ -1,5 +1,7 @@
 package basic.example._generics;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -55,19 +57,24 @@ public class DynamicArray<T> {
         return -1;
     }
 
+    public void swap(DynamicArray<?> container, int x, int y) {
+        Object temp = container.data[x];
+        container.data[x] = container.data[y];
+        container.data[y] = temp;
+    }
 }
 
 class TestDynamic {
-    public static void main(String[] args) {
-        DynamicArray<String> data = new DynamicArray<>();
+    public static void main(String[] args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
-        for (int start = 0; start <= 10; start++) {
-            data.add("ele" + start);
+        ArrayList<Integer> list = new ArrayList<Integer>();
+
+        list.add(1);  //这样调用 add 方法只能存储整形，因为泛型类型的实例为 Integer
+
+        list.getClass().getMethod("add", Object.class).invoke(list, "asd");
+
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
         }
-
-        Stream.of("123");
-
-        Integer index = data.indexOf("ele4");
-        System.out.println(index);
     }
 }

@@ -1,4 +1,4 @@
-package com.maweibinguo.generic_;
+package basic.example._generics;
 
 import java.util.ArrayList;
 import java.util.List;
