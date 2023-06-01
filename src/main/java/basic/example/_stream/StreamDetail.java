@@ -32,6 +32,7 @@ public class StreamDetail {
     }
 
     //1.2-基于集合创建
+    @Test
     public void genStreamByCollection() {
         //Collection.stream()方法 适用于 list set, 并不适用于Map
 
@@ -59,10 +60,12 @@ public class StreamDetail {
 
     public int count = 0;
 
+    @Test
     //1.3-基于Supplier创建
     public void genStreamBySupplier() {
         //Supplier
-        Stream.generate(() -> ++count + " by supplier").limit(10).forEach(System.out::println);
+        List<String> collect = Stream.generate(() -> ++count + " by supplier").limit(10).collect(Collectors.toList());
+        System.out.println("collect = " + collect);
 
         //如果我们不指定limit的话将会是一个无限流
         //Stream.generate(() -> ++count + " by supplier").limit(10).forEach(System.out::println);
@@ -76,7 +79,7 @@ public class StreamDetail {
 
     @Test
     public void testFilter() {
-        Stream.generate(() -> ++step).limit(10).filter(item -> item > 5).forEach(System.out::println);
+        Stream.generate(() -> ++step).limit(10).filter((item) -> item > 5).forEach(System.out::println);
     }
 
     @Data
@@ -115,9 +118,15 @@ public class StreamDetail {
 
     int start = 97;
 
+    /**
+     * collect 方法的参数值类型 => java.util.stream.Collector
+     * java.util.stream.Collectors 工具类中提供了很多静态方法, 可以返回Collector的实现类对象
+     * Collectors.toList()、Collectors.toSet(), Collectors.toMap(), Collectors.toCollection(), Collectors.joining()
+     * @return
+     */
     private List<Match> getDataSource() {
         //创造10个选手
-        int limit = 20;
+        int limit = 10;
         int init = start;
         return Stream.generate(() -> {
                     Match match = new Match((char) start + "",
@@ -148,11 +157,32 @@ public class StreamDetail {
          */
         System.out.println("排序后");
 
-        collect = collect.stream().sorted(
-                Comparator.comparing(Match::getScore, Comparator.reverseOrder())
-                        .thenComparing(Match::getName, Comparator.naturalOrder())
-        ).collect(Collectors.toList());
-        collect.forEach(System.out::println);
+        class MatchComparator implements Comparator<Match> {
+            @Override
+            public int compare(Match o1, Match o2) {
+                if (o1.getScore() > o2.getScore()) {
+                    return -1;
+                } else if (o1.getScore() < o2.getScore()) {
+                    return 1;
+                } else {
+                    return o1.getName().compareTo(o2.getName());
+                }
+            }
+        }
+        System.out.println("排序方式1");
+        collect.stream().sorted(new MatchComparator()).collect(Collectors.toList()).forEach(System.out::println);
+
+        /**
+         * 两种方式排序效果一致, 但是方式2更加简洁
+         * 原因是java.util.Comparator 接口中有很多默认的静态方法, 会返回Comparator的实现类对象
+         */
+        Comparator<Match> comparator = Comparator.comparing(Match::getScore, Comparator.reverseOrder())
+                .thenComparing(Match::getName, Comparator.naturalOrder());
+
+        System.out.println("排序方式2");
+        collect.stream().sorted(
+                comparator
+        ).collect(Collectors.toList()).forEach(System.out::println);
 
         System.out.println("前三名");
 
@@ -266,10 +296,10 @@ public class StreamDetail {
         System.out.println("转换为map");
 
         // 转换为map的过程中报错了, 原因是key重复了
-/*        Map<String, Match> collect = dataSource.stream().collect(Collectors.toMap(Match::getName, Function.identity()));
+        Map<String, Match> collect = dataSource.stream().collect(Collectors.toMap(Match::getName, Function.identity()));
         collect.forEach((key, value) -> {
             System.out.println(key + " : " + value);
-        });*/
+        });
 
         // 如何解决key冲突的问题? 通过Collectors.toMap的第三个参数来解决
         Map<String, Match> collect1 = dataSource.stream().collect(Collectors.toMap(Match::getName,
@@ -280,6 +310,7 @@ public class StreamDetail {
                     return next;
                 }
         ));
+        System.out.println(collect1);
     }
 
     /**
@@ -292,7 +323,8 @@ public class StreamDetail {
         dataSource.forEach(System.out::println);
         System.out.println("转换为String");
         String collectName = dataSource.stream().map(Match::getName).collect(Collectors.joining(","));
-        System.out.println(collectName);
+        List<Integer> collect = dataSource.stream().map(Match::getScore).collect(Collectors.toList());
+        System.out.println(collect);
         String collectNameV2 = dataSource.stream().map(Match::getName).collect(Collectors.joining(",", "[", "]"));
         System.out.println(collectNameV2);
     }
@@ -306,7 +338,7 @@ public class StreamDetail {
         System.out.println("原始数据, 容器使用的是 :" + dataSource.getClass());
         dataSource.forEach(System.out::println);
 
-        ArrayDeque<Match> collect = dataSource.stream().collect(Collectors.toCollection(ArrayDeque::new));
+        LinkedList<Match> collect = dataSource.stream().collect(Collectors.toCollection(LinkedList::new));
         System.out.println("转换为ArrayDeque, 容器使用的是 :" + collect.getClass());
         collect.forEach(System.out::println);
         Match pop = collect.pop();
@@ -322,12 +354,16 @@ public class StreamDetail {
         System.out.println("原始数据");
         dataSource.forEach(System.out::println);
         System.out.println("获取最小的年龄");
-        Optional<Match> min = dataSource.stream().min(Comparator.comparing(Match::getAge));
-        System.out.println(min);
-
-
         System.out.println("获取总分数");
         Integer sum = dataSource.stream().map(Match::getScore).reduce(0, Integer::sum);
+
+
+        // 获取总合
+        Double collect = dataSource.stream().map(Match::getScore).mapToDouble(Integer::intValue).sum();
+        int sum2 = dataSource.stream().map(Match::getAge).mapToInt(Integer::intValue).sum();
+
+        final int sum1 = 0;
+
         System.out.println(sum);
     }
 
@@ -338,6 +374,7 @@ public class StreamDetail {
     public void testMax() {
         List<Match> dataSource = getDataSource();
         System.out.println("原始数据");
+        dataSource.forEach(System.out::println);
         Optional<Match> max = dataSource.stream().max(Comparator.comparing(Match::getAge));
         System.out.println(max);
     }
@@ -349,6 +386,7 @@ public class StreamDetail {
     public void testCount() {
         List<Match> dataSource = getDataSource();
         System.out.println("原始数据");
+        dataSource.forEach(System.out::println);
         long count = dataSource.stream().filter(item -> item.getScore() > 5).count();
         System.out.println("获取分数大于5的个数" + count);
     }
@@ -360,7 +398,54 @@ public class StreamDetail {
     public void testSum() {
         List<Match> dataSource = getDataSource();
         System.out.println("原始数据");
+        dataSource.forEach(System.out::println);
+
+        /**
+         * mapToInt 转换为了java.util.stream.IntStream (interface), 这个接口中有sum方法;
+         * 具体的实现类为java.util.stream.IntPipeline, 通过阅读源代码,我们发现其实底层使用还是 reduce(0, Integer::sum)规约操作
+         */
+        int sum1 = dataSource.stream().mapToInt(Match::getScore).sum();
+        System.out.println("方式1获取总分数" + sum1);
+
         Integer sum = dataSource.stream().map(Match::getScore).reduce(0, Integer::sum);
-        System.out.println("获取总分数" + sum);
+        System.out.println("方式2获取总分数" + sum);
     }
+
+    @Test
+    public void testMapConvert() {
+        List<Match> dataSource = getDataSource();
+        System.out.println("原始数据");
+        dataSource.forEach(System.out::println);
+
+        LinkedList<String> strings = new LinkedList<>();
+        for(Match item: dataSource) {
+           strings.add(item.getName());
+        }
+        System.out.println(strings);
+
+        System.out.println("转换后的数据");
+        List<String> nameList = dataSource.stream().map(Match::getName).collect(Collectors.toList());
+        nameList.forEach(System.out::println);
+    }
+
+    @Test
+    public void testFlatMapConvert() {
+        List<List<Match>> collect = Stream.generate(this::getDataSource).limit(3).collect(Collectors.toList());
+        System.out.println("原始数据");
+        collect.forEach(System.out::println);
+
+        System.out.println("原始方法转换后的数据");
+        LinkedList<String> matches = new LinkedList<>();
+        for(List<Match> list: collect) {
+            for(Match match: list) {
+                    matches.add(match.getName());
+            }
+        }
+        System.out.println(matches);
+
+
+        List<String> collect1 = collect.stream().flatMap(Collection::stream).map(Match::getName).collect(Collectors.toList());
+        System.out.println(collect1);
+    }
+
 }
