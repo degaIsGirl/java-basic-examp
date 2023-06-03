@@ -269,6 +269,12 @@ public class StreamDetail {
     }
 
     /**
+     *****************************************************************************************************
+     *  针对操作后的数据, 可以选择使用容器去承接
+     ******************************************************************************************************
+     */
+
+    /**
      * 步骤7.2-将处理后的数据转换为set
      * Set的特性是, 相同的元素只有一个, 所以在转换的时候, 会自动去重
      * 相同的标准: hashcode & equals相等
@@ -296,10 +302,10 @@ public class StreamDetail {
         System.out.println("转换为map");
 
         // 转换为map的过程中报错了, 原因是key重复了
-        Map<String, Match> collect = dataSource.stream().collect(Collectors.toMap(Match::getName, Function.identity()));
+/*        Map<String, Match> collect = dataSource.stream().collect(Collectors.toMap(Match::getName, Function.identity()));
         collect.forEach((key, value) -> {
             System.out.println(key + " : " + value);
-        });
+        });*/
 
         // 如何解决key冲突的问题? 通过Collectors.toMap的第三个参数来解决
         Map<String, Match> collect1 = dataSource.stream().collect(Collectors.toMap(Match::getName,
@@ -346,6 +352,12 @@ public class StreamDetail {
     }
 
     /**
+     *****************************************************************************************************
+     *  针对操作后的数据, 可以进行相关的统计,下面是demo
+     ******************************************************************************************************
+     */
+
+    /**
      * 步骤8-获取最小值
      */
     @Test
@@ -354,17 +366,8 @@ public class StreamDetail {
         System.out.println("原始数据");
         dataSource.forEach(System.out::println);
         System.out.println("获取最小的年龄");
-        System.out.println("获取总分数");
-        Integer sum = dataSource.stream().map(Match::getScore).reduce(0, Integer::sum);
-
-
-        // 获取总合
-        Double collect = dataSource.stream().map(Match::getScore).mapToDouble(Integer::intValue).sum();
-        int sum2 = dataSource.stream().map(Match::getAge).mapToInt(Integer::intValue).sum();
-
-        final int sum1 = 0;
-
-        System.out.println(sum);
+        Optional<Match> min = dataSource.stream().min(Comparator.comparing(Match::getAge));
+        min.ifPresent(System.out::println);
     }
 
     /**
@@ -376,7 +379,7 @@ public class StreamDetail {
         System.out.println("原始数据");
         dataSource.forEach(System.out::println);
         Optional<Match> max = dataSource.stream().max(Comparator.comparing(Match::getAge));
-        System.out.println(max);
+        max.ifPresent(System.out::println);
     }
 
     /**
@@ -411,23 +414,23 @@ public class StreamDetail {
         System.out.println("方式2获取总分数" + sum);
     }
 
+    /**
+     * 类型转换
+     */
     @Test
     public void testMapConvert() {
         List<Match> dataSource = getDataSource();
         System.out.println("原始数据");
         dataSource.forEach(System.out::println);
 
-        LinkedList<String> strings = new LinkedList<>();
-        for(Match item: dataSource) {
-           strings.add(item.getName());
-        }
-        System.out.println(strings);
-
         System.out.println("转换后的数据");
         List<String> nameList = dataSource.stream().map(Match::getName).collect(Collectors.toList());
         nameList.forEach(System.out::println);
     }
 
+    /**
+     * 多纬度的Collection我们可以使用flatMap
+     */
     @Test
     public void testFlatMapConvert() {
         List<List<Match>> collect = Stream.generate(this::getDataSource).limit(3).collect(Collectors.toList());
@@ -443,8 +446,11 @@ public class StreamDetail {
         }
         System.out.println(matches);
 
-
-        List<String> collect1 = collect.stream().flatMap(Collection::stream).map(Match::getName).collect(Collectors.toList());
+        System.out.println("使用stream方法转换后的数据");
+        List<String> collect1 = collect.stream()
+                .flatMap(item -> {return item.stream();})
+                .map(Match::getName)
+                .collect(Collectors.toList());
         System.out.println(collect1);
     }
 
