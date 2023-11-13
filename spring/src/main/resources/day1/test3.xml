@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--
+        创建对象后进行了手动的注入, bean中的每一个属性都需要我们手动设置才会完成赋值;
+        如果属性很多, 就会有大量大代码要写, 与没有什么便捷的办法呢?
+        答案是有的: spring 为我们提供了自动注入; 在demo中school就是自动注入进来的
+    -->
+    <bean id="student" class="basic.example.spring._ioc.day1.Student">
+        <property name="age" value="18"/>
+        <property name="name" value="laoma"/>
+        <property name="school" ref="university"/>
+    </bean>
+
+    <!--
+        spring基于引用类型的属性提供了自动注入的机制,具体实现有两种:
+            1、基于类型(autowire="byType")
+                只要属性的类型和容器中bean对象同源即可注入,那么什么是同源呢?
+                标准很简单: 只要bean对象可以赋值给对应的属性, 也就是说bean对象代表的类型同属性代表的类型可以兼容
+            2、基于beanName
+    -->
+    <bean id="student1" class="basic.example.spring._ioc.day1.Student" autowire="byType">
+        <property name="age" value="18"/>
+        <property name="name" value="laoma"/>
+    </bean>
+
+    <!--
+        基于beanName 进行属性注入, 要求属性的名字就是bean的name, 这个时候发现school属性值为null;
+        原因就是因为容器找不到一个叫做school的bean
+    -->
+    <bean id="student2" class="basic.example.spring._ioc.day1.Student" autowire="byName">
+        <property name="age" value="18"/>
+        <property name="name" value="laoma"/>
+    </bean>
+
+<!--    <bean id="school" class="basic.example.spring._ioc.day1.University">-->
+<!--        <property name="address" value="浙江杭州余杭1"/>-->
+<!--        <property name="schoolName" value="小码在线1"/>-->
+<!--    </bean> -->
+
+
+    <bean id="university" class="basic.example.spring._ioc.day1.University">
+        <property name="address" value="浙江杭州余杭"/>
+        <property name="schoolName" value="小码在线"/>
+    </bean>
+</beans>

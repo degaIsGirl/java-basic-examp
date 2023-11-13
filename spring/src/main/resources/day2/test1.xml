@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--
+        将会对指定的包下面的类进行扫描:
+        如果扫描到的类包含@Component注解, 那么将会被放到ioc容器之中;
+        除了@Component之外, 下面的注解也会被ioc识别并加载
+        @Controller
+        @RestController
+        @Service
+        @Repository
+        上面的几个注解其实下面用的都是@Component, 只是用来细化更加明确的使用场景
+    -->
+    <context:component-scan base-package="basic.example.spring._ioc.day2"/>
+</beans>
