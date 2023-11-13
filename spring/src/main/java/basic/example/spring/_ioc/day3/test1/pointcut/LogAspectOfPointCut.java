@@ -74,7 +74,7 @@ public class LogAspectOfPointCut {
 
     // 要求被代理的对象是Shop类或者其子类
     // +表示含Shop 的子类
-    @Pointcut("target(basic.example.spring._ioc.day3.test1.pointcut.Shop+)")
+    @Pointcut("target(basic.example.spring._ioc.day3.test1.pointcut.Shop2+)")
     public void targetDemo() {
 
     }

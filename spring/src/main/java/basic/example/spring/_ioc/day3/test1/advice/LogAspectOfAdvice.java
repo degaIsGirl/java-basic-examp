@@ -5,11 +5,13 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.*;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
 @EnableAspectJAutoProxy()
+@Order(value = 2)
 public class LogAspectOfAdvice {
 
     /**
@@ -28,19 +30,9 @@ public class LogAspectOfAdvice {
      *
      *      3、@annotation 被拦截的方法上拥有特定的注解
      */
-    @Pointcut("execution(public * basic.example.spring._ioc.day3.test1.*.*(..))")
+    @Pointcut("execution(public * basic.example.spring._ioc.day3.test1.advice.*.*(..))")
     public void log() {
 
-    }
-
-    @Pointcut("@target(basic.example.spring._ioc.day3.test1.pointcut.Test1)")
-    public void test1() {
-
-    }
-
-    @Before(value = "test1()")
-    void testTargetAnnotation() {
-        System.out.println("Log => @Before, testTargetAnnotation");
     }
 
     /**

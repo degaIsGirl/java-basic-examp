@@ -1,7 +1,7 @@
 package basic.example.spring._ioc.day3;
 
 import basic.example.spring._ioc.day3.test1.advice.LogAspectOfAdvice;
-import basic.example.spring._ioc.day3.test1.pointcut.Shop;
+import basic.example.spring._ioc.day3.test1.pointcut.Shop2;
 import org.junit.jupiter.api.Test;
 import org.springframework.aop.aspectj.annotation.AspectJProxyFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -97,34 +97,50 @@ public class Day3 {
      */
 
     /**
-     * 为五种通知给出了具体demo例子, 和易错点
+     * 列举了常见的@PointCut的使用方法
      */
     @Test
     public void test1OfPointCut() {
         String path = "day3/test1OfPointCut.xml";
         ClassPathXmlApplicationContext classPathXmlApplicationContext = new ClassPathXmlApplicationContext(path);
-        IShop shop = classPathXmlApplicationContext.getBean("shop", IShop.class);
+        IShop shop = classPathXmlApplicationContext.getBean("shop2", IShop.class);
         String order = shop.order("123");
         System.out.println(order);
     }
 
+    /**
+     * 为五种通知给出了具体demo例子, 和易错点
+     */
+    @Test
+    public void test1OfAdvice() {
+        String path = "day3/test1OfAdvice.xml";
+        ClassPathXmlApplicationContext classPathXmlApplicationContext = new ClassPathXmlApplicationContext(path);
+        IShop shop = classPathXmlApplicationContext.getBean("shop1", IShop.class);
+        String order = shop.order("1234");
+        System.out.println(order);
+    }
+
+    /**
+     * 多个切面是如何执行的
+     *
+     */
     @Test
     public void test2() {
-        String path = "day3/test1OfPointCut.xml";
+        String path = "day3/test2.xml";
         ClassPathXmlApplicationContext classPathXmlApplicationContext = new ClassPathXmlApplicationContext(path);
-        IShop superMarket = classPathXmlApplicationContext.getBean("superMarket", IShop.class);
-        String order = superMarket.order("321");
+        IShop shop = classPathXmlApplicationContext.getBean("shop1", IShop.class);
+        String order = shop.order("12345");
         System.out.println(order);
     }
 
     @Test
-    public void aspectTest() {
-        Shop target = new Shop();
+    public void aspectjTest() {
+        Shop2 target = new Shop2();
         AspectJProxyFactory proxyFactory = new AspectJProxyFactory();
         proxyFactory.setTarget(target);
         // 添加切面
         proxyFactory.addAspect(LogAspectOfAdvice.class);
-        Shop proxy = proxyFactory.getProxy();
+        Shop2 proxy = proxyFactory.getProxy();
         // 方法调用
         proxy.order("xx");
         System.out.println("\n执行异常的结果：");
