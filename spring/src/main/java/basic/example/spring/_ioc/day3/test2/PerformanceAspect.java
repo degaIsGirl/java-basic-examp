@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PerformanceAspect {
 
-    @Pointcut("execution(public * basic.example.spring._ioc.day3..*.*(..))")
+    @Pointcut("execution(public * basic.example.spring._ioc.day3.test2.*(..))")
     public void log() {
 
     }
