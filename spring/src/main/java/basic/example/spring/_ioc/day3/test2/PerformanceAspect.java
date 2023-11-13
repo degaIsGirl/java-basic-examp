@@ -25,8 +25,8 @@ public class PerformanceAspect {
      *
      * @param joinPoint
      */
-    @Before(value = "log() && args(orderNo)")
-    void deBefore(JoinPoint joinPoint, String orderNo) {
+    @Before(value = "log()")
+    void deBefore(JoinPoint joinPoint) {
         /**
          * 获取被代理的目标对象
          */
