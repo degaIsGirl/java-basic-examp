@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="student" class="basic.example.spring._ioc.day1.test1OfNoIoc.Student" autowire="byType">
+        <property name="age" value="18"/>
+        <property name="name" value="laoma"/>
+    </bean>
+
+    <bean id="school" class="basic.example.spring._ioc.day1.test1OfNoIoc.School">
+        <property name="address" value="浙江杭州余杭"/>
+        <property name="schoolName" value="小码在线"/>
+    </bean>
+</beans>

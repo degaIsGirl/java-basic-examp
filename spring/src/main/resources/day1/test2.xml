@@ -7,17 +7,17 @@
         如果bean定义中没有constructor-arg, 那么就会去执行默认的构造函数创建对象,
         此时如果没有无参构造将会报错: No default constructor found;
     -->
-    <bean id="student" class="basic.example.spring._ioc.day1.Student">
+    <bean id="student" class="basic.example.spring._ioc.day1.test1OfNoIoc.Student">
     </bean>
 
     <!--
         如果bean定义中有指定construct-arg, 那么就会执行指定的构函数创建对象
      -->
-    <bean id="student1" class="basic.example.spring._ioc.day1.Student">
+    <bean id="student1" class="basic.example.spring._ioc.day1.test1OfNoIoc.Student">
         <constructor-arg name="school" ref="school"/>
     </bean>
 
-    <bean id="school" class="basic.example.spring._ioc.day1.School">
+    <bean id="school" class="basic.example.spring._ioc.day1.test1OfNoIoc.School">
         <property name="address" value="浙江杭州余杭"/>
         <property name="schoolName" value="小码在线"/>
     </bean>

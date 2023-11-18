@@ -5,5 +5,5 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <context:component-scan base-package="basic.example.spring._ioc.day3.test1.advice"/>
+    <context:component-scan base-package="basic.example.spring._ioc.test4.test1.advice"/>
 </beans>
