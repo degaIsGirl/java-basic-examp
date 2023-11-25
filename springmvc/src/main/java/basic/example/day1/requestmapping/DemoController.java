@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class DemoController {
-    @GetMapping("debug")
+    @GetMapping("debug1")
     public String debug() {
         System.out.println("debug");
         return "debug exec";
