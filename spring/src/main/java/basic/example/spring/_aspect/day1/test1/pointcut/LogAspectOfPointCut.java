@@ -1,12 +1,12 @@
-package basic.example.spring.aspect.day1.test1.pointcut;
+package basic.example.spring._aspect.day1.test1.pointcut;
 
-import org.aspectj.lang.annotation.*;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-@EnableAspectJAutoProxy()
 public class LogAspectOfPointCut {
 
     /**
@@ -63,7 +63,7 @@ public class LogAspectOfPointCut {
     }
 
     // 要求被代理的目标类上面拥有basic.example.spring._ioc.day1.test1.pointcut.Test1 这个注解
-    @Pointcut("@target(basic.example.spring.aspect.day1.test1.pointcut.Test1)")
+    @Pointcut("@target(basic.example.spring._aspect.day1.test1.pointcut.Test1)")
     public void targetAnnotation() {
 
     }
@@ -74,7 +74,7 @@ public class LogAspectOfPointCut {
 
     // 要求被代理的对象是Shop类或者其子类
     // +表示含Shop 的子类
-    @Pointcut("target(basic.example.spring.aspect.day1.test1.pointcut.Shop2+)")
+    @Pointcut("target(basic.example.spring._aspect.day1.test1.pointcut.Shop2+)")
     public void targetDemo() {
 
     }
@@ -84,7 +84,7 @@ public class LogAspectOfPointCut {
     }
 
     // 要求被代理的方法上拥有basic.example.spring._ioc.day1.test1.pointcut.Test1 这个注解
-    @Pointcut("@annotation(basic.example.spring.aspect.day1.test1.pointcut.Test1)")
+    @Pointcut("@annotation(basic.example.spring._aspect.day1.test1.pointcut.Test1)")
     public void methodAnnotation() {
     }
     @Before("methodAnnotation()")

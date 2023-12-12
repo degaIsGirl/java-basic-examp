@@ -1,4 +1,4 @@
-package basic.example.spring.aspect.day1.test1.advice;
+package basic.example.spring._aspect.day1.test1.advice;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -30,7 +30,7 @@ public class LogAspectOfAdvice {
      *
      *      3、@annotation 被拦截的方法上拥有特定的注解
      */
-    @Pointcut("execution(public * basic.example.spring._ioc.day4.test1.advice.*.*(..))")
+    @Pointcut("execution(public * basic.example.spring._aspect.day1..test1.advice.*.*(..))")
     public void log() {
 
     }

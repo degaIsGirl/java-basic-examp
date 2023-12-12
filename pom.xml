@@ -12,6 +12,7 @@
         <module>springmvc</module>
         <module>java</module>
         <module>spring</module>
+        <module>spring-webflux</module>
     </modules>
 
     <properties>

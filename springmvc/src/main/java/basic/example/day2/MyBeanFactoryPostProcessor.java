@@ -1,4 +1,4 @@
-package basic.example.day4;
+package basic.example.day2;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;

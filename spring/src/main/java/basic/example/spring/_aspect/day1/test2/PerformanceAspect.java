@@ -1,4 +1,4 @@
-package basic.example.spring.aspect.day1.test2;
+package basic.example.spring._aspect.day1.test2;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Order(value = 1)
 public class PerformanceAspect {
 
-    @Pointcut("execution(public * basic.example.spring._ioc.day4..*.*(..))")
+    @Pointcut("execution(public * basic.example.spring._aspect.day1.test1.*.*(..))")
     public void log() {
 
     }

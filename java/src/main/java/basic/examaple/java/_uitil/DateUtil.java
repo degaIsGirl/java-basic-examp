@@ -42,16 +42,16 @@ public class DateUtil {
 
     @Test
     public void testLocalDateTime() {
-        LocalDateTime now = LocalDateTime.now();
-        int year = now.getYear();
-        int monthValue = now.getMonthValue();
-        int dayValue = now.getDayOfMonth();
-        int hour = now.getHour();
-        int minute = now.getMinute();
-        int second = now.getSecond();
-        DayOfWeek dayOfWeek = now.getDayOfWeek();
-        int value = dayOfWeek.getValue();
-        System.out.println(value);
+//        LocalDateTime now = LocalDateTime.now();
+//        int year = now.getYear();
+//        int monthValue = now.getMonthValue();
+//        int dayValue = now.getDayOfMonth();
+//        int hour = now.getHour();
+//        int minute = now.getMinute();
+//        int second = now.getSecond();
+//        DayOfWeek dayOfWeek = now.getDayOfWeek();
+//        int value = dayOfWeek.getValue();
+        System.out.println("");
     }
 
     @Test

@@ -1,4 +1,5 @@
 debug: true
+access-token: 123456
 spring:
   thymeleaf:
     prefix: classpath:/templates/

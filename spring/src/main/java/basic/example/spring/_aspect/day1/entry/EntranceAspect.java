@@ -1,4 +1,4 @@
-package basic.example.spring.aspect.day1.entry;
+package basic.example.spring._aspect.day1.entry;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 @EnableAspectJAutoProxy
 public class EntranceAspect {
-    @Pointcut("execution(public * basic.example.spring.aspect.day1.entry.DemoShop.*(..))")
+    @Pointcut("execution(public * basic.example.spring._aspect.day1.entry.DemoShop.*(..))")
     public void cal() {
 
     }

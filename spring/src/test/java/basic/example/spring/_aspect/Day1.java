@@ -1,8 +1,8 @@
 package basic.example.spring._aspect;
 
-import basic.example.spring.aspect.day1.IShop;
-import basic.example.spring.aspect.day1.test1.advice.LogAspectOfAdvice;
-import basic.example.spring.aspect.day1.test1.pointcut.Shop2;
+import basic.example.spring._aspect.day1.IShop;
+import basic.example.spring._aspect.day1.test1.advice.LogAspectOfAdvice;
+import basic.example.spring._aspect.day1.test1.pointcut.Shop2;
 import org.junit.jupiter.api.Test;
 import org.springframework.aop.aspectj.annotation.AspectJProxyFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

@@ -1,6 +1,6 @@
-package basic.example.spring.aspect.day1.entry;
+package basic.example.spring._aspect.day1.entry;
 
-import basic.example.spring.aspect.day1.IShop;
+import basic.example.spring._aspect.day1.IShop;
 import org.springframework.stereotype.Component;
 
 /**

@@ -1,4 +1,4 @@
-package basic.example.spring.aspect.day1.test1.pointcut;
+package basic.example.spring._aspect.day1.test1.pointcut;
 
 import org.springframework.stereotype.Component;
 

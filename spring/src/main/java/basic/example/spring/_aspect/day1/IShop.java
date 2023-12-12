@@ -1,4 +1,4 @@
-package basic.example.spring.aspect.day1;
+package basic.example.spring._aspect.day1;
 
 public interface IShop {
     String order(String orderNo);

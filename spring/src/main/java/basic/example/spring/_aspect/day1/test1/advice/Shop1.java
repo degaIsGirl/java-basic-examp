@@ -1,6 +1,6 @@
-package basic.example.spring.aspect.day1.test1.advice;
+package basic.example.spring._aspect.day1.test1.advice;
 
-import basic.example.spring.aspect.day1.IShop;
+import basic.example.spring._aspect.day1.IShop;
 import org.springframework.stereotype.Component;
 
 @Component
