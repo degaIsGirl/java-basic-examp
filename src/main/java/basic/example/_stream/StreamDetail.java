@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -122,6 +123,7 @@ public class StreamDetail {
      * collect 方法的参数值类型 => java.util.stream.Collector
      * java.util.stream.Collectors 工具类中提供了很多静态方法, 可以返回Collector的实现类对象
      * Collectors.toList()、Collectors.toSet(), Collectors.toMap(), Collectors.toCollection(), Collectors.joining()
+     *
      * @return
      */
     private List<Match> getDataSource() {
@@ -247,6 +249,7 @@ public class StreamDetail {
                 new Match("b", 12, 10),//hit
                 new Match("b", 12, 11)
         ).collect(Collectors.toList());
+
         Map<String, Optional<Match>> groupMax2 = dataSource.stream().collect(
                 Collectors.groupingBy(
                         Match::getName,
@@ -266,7 +269,24 @@ public class StreamDetail {
         groupMax2.forEach((key, value) -> {
             System.out.println(key + " : " + value);
         });
+
+        // 将dataSource按照name进行分组, 然后再按照name二次分组, 最后每个分组按照分数倒序排序
+        Map<String, Map<Integer, List<Match>>> collect1 = dataSource.stream().collect(
+                Collectors.groupingBy(
+                        Match::getName,
+                        Collectors.groupingBy(
+                                Match::getScore,
+                                Collectors.collectingAndThen(
+                                        Collectors.toList(),
+                                        list -> list.stream().sorted(
+                                                Comparator.comparing(Match::getScore, Comparator.reverseOrder())
+                                        ).collect(Collectors.toList())
+                                )
+                        )
+                )
+        );
     }
+
 
     /**
      *****************************************************************************************************
@@ -429,7 +449,7 @@ public class StreamDetail {
     }
 
     /**
-     * 多纬度的Collection我们可以使用flatMap
+     * 12、多纬度的Collection我们可以使用flatMap
      */
     @Test
     public void testFlatMapConvert() {
@@ -439,19 +459,20 @@ public class StreamDetail {
 
         System.out.println("原始方法转换后的数据");
         LinkedList<String> matches = new LinkedList<>();
-        for(List<Match> list: collect) {
-            for(Match match: list) {
-                    matches.add(match.getName());
+        for (List<Match> list : collect) {
+            for (Match match : list) {
+                matches.add(match.getName());
             }
         }
         System.out.println(matches);
 
         System.out.println("使用stream方法转换后的数据");
         List<String> collect1 = collect.stream()
-                .flatMap(item -> {return item.stream();})
+                .flatMap(item -> {
+                    return item.stream();
+                })
                 .map(Match::getName)
                 .collect(Collectors.toList());
         System.out.println(collect1);
     }
-
 }
